@@ -19,6 +19,10 @@ jobs:
           recursive: true
           dest: artifact.zip 
           path: ${{ github.workspace }}/artifact.zip
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Unit-Converter
+          path: ${{ github.workspace }}/artifact.zip       
   continuous-deployment:
     runs-on: ubuntu-latest
     needs: [continuous-integration]
