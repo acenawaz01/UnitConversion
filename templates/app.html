@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Temperature Converter App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    />
+
+    <style>
+      .alert {
+        background: green;
+        padding: 1rem;
+        border-radius: 5px;
+        color: white;
+        margin: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>Temperature Converter App</h3>
+    </div>
+
+    <!-- Form -->
+    <div class="container">
+      <form action="/send" method="POST">
+        <label for="Input Numerical Value">Input Numerical Value</label>
+        <input
+          type="text"
+          placeholder="Input Value"
+          class="u-full-width"
+          name="input_value"
+        />
+
+        <label for="Input Unit of Measure">Input Unit of Measure</label>
+        <input
+          type="text"
+          placeholder="Input Measure"
+          class="u-full-width"
+          name="input_unit"
+        />
+
+        <label for="Target Unit of Measure">Target Unit of Measure</label>
+        <input
+          type="text"
+          placeholder="Target Measure"
+          class="u-full-width"
+          name="output_unit"
+        />
+
+        <label for="Student Response">Student Response</label>
+        <input
+          type="text"
+          placeholder="Student Response"
+          class="u-full-width"
+          name="student_response"
+        />
+
+
+        <input type="submit" value="Calculate" id="calc_btn" />
+        <br />
+<div id="outputDiv" style="width: 500px; height: 75px; border: 1px solid;"> {{result}}</div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
