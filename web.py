@@ -1,63 +1,62 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
+from flask_restful import request, Resource, Api
 from random import randint
 
 myapp = Flask(__name__)
+myapi = Api(myapp)
 
-@myapp.route("/")
-def hello():
-    return render_template(
-        'app.html', **locals())
+class GetResult(Resource):
+    def get(self):
 
-# Logic for temperature conversion
-@myapp.route('/send', methods=['POST'])
-def send():
-    if request.method == 'POST':
-        input_unit = request.form['input_unit']
-        output_unit = request.form['output_unit']
-
+        from_unit = request.args['from_unit']
+        to_unit = request.args['to_unit']
+        print(request.args['from_unit'])
         try:
-           input_value = float(request.form['input_value'])
-           student_response = float(request.form['student_response'])
+           question_value = float(request.args['question_value'])
+           entered_answer = float(request.args['entered_answer'])
         except:
-           return render_template('app.html', result="incorrect")
+           return "Incorrect"
 
         # Ignore case for inputs
-        input_unit_ic = input_unit.lower().strip()
-        output_unit_ic = output_unit.lower().strip()
+        from_unit = from_unit.lower().strip()
+        to_unit = to_unit.lower().strip()
 
-        mid_value = 0
-        output_value = 0
+        value_in_kelvin = 0
+        correct_value = 0
 
-        if input_unit_ic in ['fahrenheit','kelvin','celsius','rankine'] and output_unit_ic in ['fahrenheit','kelvin','celsius','rankine']:
+        if from_unit in ['fahrenheit','kelvin','celsius','rankine'] and to_unit in ['fahrenheit','kelvin','celsius','rankine']:
         # Convert input unit to kelvin
-           if input_unit_ic == 'celsius':
-              mid_value = input_value + 273.15
-           elif input_unit_ic == 'fahrenheit':
-              mid_value = ((input_value - 32)*5/9) + 273.15
-           elif input_unit_ic == 'rankine':
-              mid_value = ((input_vaule)*5)/9
-           elif input_unit_ic == 'kelvin':
-              mid_value = input_value
+           if from_unit == 'celsius':
+              value_in_kelvin = question_value + 273.15
+           if from_unit == 'fahrenheit':
+              value_in_kelvin = ((question_value - 32)*5/9) + 273.15
+           if from_unit == 'rankine':
+              value_in_kelvin = ((input_vaule)*5)/9
+           if from_unit == 'kelvin':
+              value_in_kelvin = question_value
 
-        # Convert kelvin to output_unit
-           if output_unit_ic == 'celsius':
-              output_value = mid_value - 273.15
-           elif output_unit_ic == 'fahrenheit':
-              output_value = ((mid_value - 273.15)*9/5) + 32
-           elif output_unit_ic == 'rankine':
-              output_value = mid_value * 1.8
-           elif output_unit_ic == 'kelvin':
-              output_value = mid_value
+        # Convert kelvin to to_unit
+           if to_unit == 'celsius':
+              correct_value = value_in_kelvin - 273.15
+           if to_unit == 'fahrenheit':
+              correct_value = ((value_in_kelvin - 273.15)*9/5) + 32
+           if to_unit == 'rankine':
+              correct_value = value_in_kelvin * 1.8
+           if to_unit == 'kelvin':
+              correct_value = value_in_kelvin
         else:
            output = "invalid"
-        if round(student_response,1) == round(output_value,1):
+           return output
+        if round(entered_answer,1) == round(correct_value,1):
            output = "correct"
-        elif round(student_response,1) != round(output_value,1):
-           output = "incorrect"
+        elif round(entered_answer,1) != round(correct_value,1):
+           output = "Incorrect"
         else:
-           output = "incorrect"
+           output = "Incorrect"
 
-        return render_template('app.html', result=output)
+        return output
+
+myapi.add_resource(GetResult, '/result', endpoint='result')
 
 
 if __name__ == "__main__":
