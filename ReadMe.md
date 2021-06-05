@@ -16,3 +16,12 @@ To Setup Project:
 5. Run "terraform init" followed by "terraform apply"
 6. This will take care of setting up entire infrastructure including EC2 and CodeDeploy.
 7. Once you commit in master branch, it wll trigger workflow and the deployment in Codedeploy.
+
+
+The source code returns result via REST API:
+Put the inputs in URL browser in below format to get output or make curl call.
+Sample Output:
+http://54.163.88.86/result?from_unit=Fahrenheit&to_unit=Rankine&question_value=84.2&entered_answer=543.94 - correct
+http://54.163.88.86/result?from_unit=Kelvin&to_unit=Fahrenheit&question_value=317.33&entered_answer=111.554 - incorrect
+http://54.163.88.86/result?from_unit=Fahrenheit&to_unit=Rankine&question_value=6.5&entered_answer=dog - incorrect
+http://54.163.88.86/result?from_unit=dogcow&to_unit=Celsius&question_value=136.1&entered_answer=45.32 - invalid
