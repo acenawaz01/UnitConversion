@@ -3,7 +3,7 @@
 sudo yum update -y
 sudo yum install -y ruby
 sudo yum install wget -y
-wget https://aws-codedeploy-ap-southeast-1.s3.ap-southeast-1.amazonaws.com/latest/install
+wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
 chmod +x ./install
 sudo ./install auto
 sudo service codedeploy-agent start
